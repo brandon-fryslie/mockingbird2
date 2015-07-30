@@ -1,11 +1,14 @@
 path = require 'path'
-Page = require './page'
 
 express = require 'express'
 expressWs = require('express-ws')
 router = express.Router()
 
-start_up_server = ->
+
+# pass in some handlers here
+
+start_up_server = (opts) ->
+
   OK_HANDLER = (data = 'OK') ->
     (req, res) -> res.status(200).send(data)
 
@@ -13,7 +16,9 @@ start_up_server = ->
   expressWs app
 
   router.use (req, res, next) ->
-    log_to_webpage "request - #{req.method} #{req.url} #{("#{k}=#{v}" for k, v of req.query).join(' ')}"
+    # opts?.middleware? req, res
+
+    opts.logger "request - #{req.method} #{req.url.replace(/\?.*?$/, '')} #{("#{k}=#{v}" for k, v of req.query).join(' ')}"
     next()
 
   # ----------------- RULE ROUTES ---------------
@@ -43,7 +48,7 @@ start_up_server = ->
         .delete(OK_HANDLER())
 
   router.route('/watch/')
-        .get(OK_HANDLER())
+        .get(opts.getWatchesHandler)
   # --------------- / WATCH ROUTES ---------------
 
 
@@ -57,20 +62,23 @@ start_up_server = ->
 
   app.ws '/_websocket', (ws, res) ->
     ws.on 'message', (msg) ->
-      log_to_webpage "weboscket got message: #{msg}"
+      opts.logger "weboscket got message: #{msg}"
 
   app.use '/notifications/api/v1', router
   # app.use router
 
   app.all '*', (req, res) ->
-    log_to_webpage "#{req.method} #{req.url}: fell through to default handler"
+    opts.logger "#{req.method} #{req.url}: fell through to default handler"
     res.status(200).send('default handler')
 
-  server = app.listen '3200'
+  port = 3200
 
-  url = "http://localhost:#{3200}"
+  server = app.listen "#{port}"
 
-  log_to_webpage """starting server: #{url}"""
-  log_to_webpage JSON.stringify app
+  url = "http://localhost:#{port}"
+
+  opts.logger """starting mock pigeon: #{url}"""
+
+  server
 
 module.exports = start_up_server
