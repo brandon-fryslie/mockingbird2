@@ -12,10 +12,7 @@ WatchesPanel = React.createClass
     header_cells = (<th>{attr}</th> for attr in attributes)
 
     rows = for watch in this.props.watches
-
-      cells = (<td>{watch[attr]}</td> for attr in attributes)
-
-      <tr>{cells}</tr>
+      <tr>{(<td>{watch[attr]}</td> for attr in attributes)}</tr>
 
     <Panel>
       <h2>Your Watches</h2>

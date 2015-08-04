@@ -1,0 +1,69 @@
+{
+  "context": {
+    "services": {
+      "timeline_service_url": "/timeline-service",
+      "planning_service_url": "/planning-service"
+    },
+    "appSdkBaseUrl": "/apps/",
+    "isOptedInForNotificationsBeta": false,
+    "isOptedInTeamPlanningBeta": false,
+    "burroUrl": "/assets/burro",
+    "stack": {
+      "isBuild": false,
+      "isTrial": false,
+      "isOnPrem": false,
+      "buildNumber": "17776",
+      "branchName": "almci-master"
+    },
+    "user": {
+      "_ref": "/user/9213407558",
+      "_refObjectName": "Brian Mickey",
+      "_refObjectUUID": "98b31fd3-c45c-43bd-8930-17e9d1ed177e",
+      "CreationDate": "2012-10-22T14:35:50.000Z",
+      "UserName": "bbbb@test.com",
+      "FirstName": "Brian",
+      "DisplayName": "Mickey",
+      "Planner": false,
+      "ObjectID": 9213407558,
+      "LandingPage": "/iterationstatus",
+      "UserProfile": {
+        "_ref": "/userprofile/9213407560",
+        "ObjectID": 9213407560,
+        "DateFormat": "",
+        "DateTimeFormat": "",
+        "TimeZone": "",
+        "WelcomePageHidden": true,
+        "DefaultDetailPageToViewingMode": false,
+        "EmailNotificationEnabled": true
+      }
+    },
+    "permissions": {
+      "userPermissions": [],
+      "_scopeRoleMap": {}
+    },
+    "subscription": {
+      "EmailEnabled": true,
+      "ExpirationDate": "",
+      "MaximumProjects": -1,
+      "Modules": [
+        "Integration Hub",
+        "Rally Portfolio Manager",
+        "HP Integration",
+        "IBM Integration",
+        "Rally Idea Manager",
+        "Rally Quality Manager",
+        "Rally Support Manager",
+        "Rally Time Tracker",
+        "SSO",
+        "IP Restriction",
+        "Extension Whitelist"
+      ],
+      "ProjectAdminsCanCreateUsers": false,
+      "ProjectHierarchyEnabled": true,
+      "StoryHierarchyEnabled": true,
+      "SubscriptionID": 100,
+      "SubscriptionType": "Unlimited",
+      "WorkspaceAdminsCanCreateUsers": false
+    }
+  }
+}

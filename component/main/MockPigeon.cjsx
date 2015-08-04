@@ -1,5 +1,7 @@
 _ = require 'lodash'
 
+alm = require './AlmApi'
+
 class MockPigeon
 
   constructor: (@watchesStore) ->

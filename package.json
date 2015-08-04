@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/airtoxin/atomshell-react-boilerplate",
   "dependencies": {
+    "babel": "^5.8.20",
+    "churro": "^2.0.257",
     "coffee-react": "^4.0.0",
     "coffee-reactify": "^4.0.0",
     "electron-prebuilt": "^0.30.1",

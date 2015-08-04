@@ -1,0 +1,22 @@
+{
+  "config": {
+    "baseUrl": "",
+    "contextPath": "/slm",
+    "resourcesPath": "/slm/js-lib/rui/builds/rui/resources",
+    "defaultWsapiVersion": "v2.x",
+    "defaultLookbackVersion": "v2.0",
+    "wsapiVersionAliases": [
+      "x",
+      "v2.x"
+    ]
+  },
+  "baseUrl": "",
+  "contextPath": "/slm",
+  "resourcesPath": "/slm/js-lib/rui/builds/rui/resources",
+  "defaultWsapiVersion": "v2.x",
+  "defaultLookbackVersion": "v2.0",
+  "wsapiVersionAliases": [
+    "x",
+    "v2.x"
+  ]
+}
