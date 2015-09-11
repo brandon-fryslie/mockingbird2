@@ -5,7 +5,7 @@ React = require 'react'
 MockPigeonPane = require('./MockPigeonPane')
 ServerLog = require('./ServerLog')
 ControlsForm = require('./ControlsForm')
-WatchesPanel = require('./WatchesPanel')
+ArtifactPanel = require('./ArtifactPanel')
 
 start_server = require('./server')
 
@@ -25,6 +25,9 @@ MockPigeonPane = React.createClass
     @server = start_server
       logger: this._logger
       getWatchesHandler: pigeon.getWatches
+      watchGetHandler: pigeon.getWatch
+      watchPostHandler: pigeon.postWatch
+      watchDeleteHandler: pigeon.deleteWatch
 
   componentDidUnmount: ->
     @server.close()
@@ -43,11 +46,11 @@ MockPigeonPane = React.createClass
   render: ->
     <Grid>
       <Row className='show-grid'>
+        <Col md={9}>
+          <ArtifactPanel logger={this._logger} />
+        </Col>
         <Col md={3}>
           <ServerLog buffer={this.state.logBuffer} />
-        </Col>
-        <Col md={9}>
-          <WatchesPanel watches={watchesStore.getWatches()} />
         </Col>
       </Row>
     </Grid>

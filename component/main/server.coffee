@@ -34,18 +34,19 @@ start_up_server = (opts) ->
   # --------------- / RULE ROUTES ---------------
 
   # ----------------- WATCH ROUTES ---------------
-  router.route('/watch/:artifact-uuid/user/:user-uuid')
-        .get(OK_HANDLER())
-        .post(OK_HANDLER())
-        .delete(OK_HANDLER())
+  router.route('/watch/:artifact_uuid')
+        .get(opts.watchGetHandler)
+        .post(opts.watchPostHandler)
+        .delete(opts.watchDeleteHandler)
 
-  router.route('/watch/user/:user-uuid')
-        .get(OK_HANDLER())
+  router.route('/watch/:artifactuuid/user/:user_uuid')
+        .get(opts.watchGetHandler)
+        .post(opts.watchPostHandler)
+        .delete(opts.watchDeleteHandler)
 
-  router.route('/watch/:artifact-uuid')
-        .get(OK_HANDLER())
-        .post(OK_HANDLER())
-        .delete(OK_HANDLER())
+  # wtf is this for
+  router.route('/watch/user/:user_uuid')
+        .get(opts.watchGetHandler)
 
   router.route('/watch/')
         .get(opts.getWatchesHandler)
@@ -64,12 +65,13 @@ start_up_server = (opts) ->
     ws.on 'message', (msg) ->
       opts.logger "weboscket got message: #{msg}"
 
-  app.use '/notifications/api/v1', router
+  app.use '/api/v1', router
+  app.use '/notifications/api/v1/', router
   # app.use router
 
-  app.all '*', (req, res) ->
-    opts.logger "#{req.method} #{req.url}: fell through to default handler"
-    res.status(200).send('default handler')
+  # app.all '*', (req, res) ->
+  #   opts.logger "#{req.method} #{req.url}: fell through to default handler"
+  #   res.status(200).send('default handler')
 
   port = 3200
 
