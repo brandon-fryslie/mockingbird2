@@ -1,5 +1,5 @@
 
-AlmApi = require 'churro/apis/AlmApi'
+# AlmApi = require 'churro/apis/AlmApi'
 
 
 
@@ -18,7 +18,7 @@ Rally.clientmetrics =
           tId: 123
           eId: 123
 
-AlmApi.query('UserStory').then (response) ->
-  debugger
-.catch (err) ->
-  debugger
+# AlmApi.query('UserStory').then (response) ->
+#   debugger
+# .catch (err) ->
+#   debugger
