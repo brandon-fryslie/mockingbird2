@@ -2,9 +2,7 @@ _ = require 'lodash'
 React = require 'react'
 
 {Grid, Row, Col, Panel, TabbedArea, TabPane} = require 'react-bootstrap'
-MockPigeonPane = require('./MockPigeonPane')
 ServerLog = require('./ServerLog')
-ControlsForm = require('./ControlsForm')
 ArtifactPanel = require('./ArtifactPanel')
 
 start_server = require('./server')
@@ -12,11 +10,11 @@ start_server = require('./server')
 watchesStore = require('./WatchesStore')
 watchesStore.setWatches require('./watches.json')
 
-MockPigeon = require './MockPigeon'
+MockPigeon = require('./MockPigeon')
 pigeon = new MockPigeon watchesStore
 
 MockPigeonPane = React.createClass
-  displayName: 'MockPigeonPane',
+  displayName: 'MockPigeonPane'
 
   getInitialState: ->
     logBuffer: []
@@ -36,12 +34,6 @@ MockPigeonPane = React.createClass
     newBuffer = this.state.logBuffer
     newBuffer.unshift str
     this.setState logBuffer: newBuffer
-
-  # _onSubscriptionEmailEnabledCheckboxChange: (e) ->
-  #   this.setState _.assign {}, this.state, {subscriptionEmailEnabled: e.target.checked}
-
-  # _onSubscriptionEmailEnabledCheckboxChange: (e) ->
-  #   this.setState _.assign {}, this.state, {userEmailEnabled: e.target.checked}
 
   render: ->
     <Grid>
