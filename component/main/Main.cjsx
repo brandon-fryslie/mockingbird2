@@ -3,7 +3,7 @@ React = require( 'react' )
 {Grid, Row, Col, Panel, TabbedArea, TabPane} = require('react-bootstrap')
 MockPigeonPane = require('./MockPigeonPane')
 RallyPane = require('./RallyPane')
-ArtifactPanel = require('./ArtifactPanel')
+ToolsPane = require('./ToolsPane')
 
 Main = React.createClass
 
@@ -15,7 +15,7 @@ Main = React.createClass
         <MockPigeonPane />
       </TabPane>
       <TabPane eventKey={2} tab='Tools'>
-        <div>Nothing yet</div>
+        <ToolsPane />
       </TabPane>
       <TabPane eventKey={3} tab='Rally'>
         <RallyPane />

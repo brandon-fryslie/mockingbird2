@@ -4,25 +4,12 @@ rally = require 'rally'
 
 {EventEmitter} = require 'events'
 
-RallyStore = require './RallyStore'
+Alm = require './AlmApi'
 
 class ArtifactStore extends EventEmitter
 
   constructor: ->
-    @setRallyRestApi()
-    RallyStore.addListener 'update', => @setRallyRestApi()
-
-  setRallyRestApi: ->
-    console.log 'setting rally rest api', RallyStore.getServer(), RallyStore.getUsername(), RallyStore.getPassword()
-    @restApi = rally
-      user: RallyStore.getUsername()
-      pass: RallyStore.getPassword()
-      server: RallyStore.getServer()
-      requestOptions:
-        headers:
-          'X-RallyIntegrationName': 'MockPigeon'
-          'X-RallyIntegrationVendor': 'Rally'
-          'X-RallyIntegrationVersion': '0.0.1'
+    Alm.addListener 'update', => @load()
 
   getById: (uuid) -> _.find this.artifacts, _refObjectUUID: uuid
 
@@ -46,8 +33,7 @@ class ArtifactStore extends EventEmitter
     @emit 'update'
 
   load: ->
-    debugger
-    @restApi.query(
+    Alm.api.query(
       type: 'artifact'
       fetch: ['Project']
     ).then((results) =>

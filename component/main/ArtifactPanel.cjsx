@@ -15,7 +15,6 @@ ArtifactPanel = React.createClass
 
   componentWillMount: ->
     ArtifactStore.addListener 'update', =>
-      console.log 'Got store update.  Rerendering...'
       @setState
         artifacts: ArtifactStore.getArtifacts()
         error: null
