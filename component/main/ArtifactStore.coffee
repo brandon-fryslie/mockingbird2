@@ -2,11 +2,15 @@ _ = require 'lodash'
 
 rally = require 'rally'
 
-{EventEmitter} = require 'events'
-
 Alm = require './AlmApi'
 
-class ArtifactStore extends EventEmitter
+AbstractPagedStore = require './AbstractPagedStore'
+
+class ArtifactStore extends AbstractPagedStore
+
+  type: 'artifact'
+
+  fetch: ['Project']
 
   constructor: ->
     Alm.addListener 'update', => @load()
@@ -31,14 +35,5 @@ class ArtifactStore extends EventEmitter
   unwatch: (artifact) ->
     artifact.watching = false
     @emit 'update'
-
-  load: ->
-    Alm.api.query(
-      type: 'artifact'
-      fetch: ['Project']
-    ).then((results) =>
-      @setData results.Results
-      @emit 'update'
-    )
 
 module.exports = new ArtifactStore

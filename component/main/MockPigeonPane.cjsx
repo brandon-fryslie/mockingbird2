@@ -20,29 +20,35 @@ MockPigeonPane = React.createClass
     logBuffer: []
 
   componentWillMount: ->
+    @_startServer()
+
+  componentDidUnmount: ->
+    @_stopServer()
+
+  _startServer: ->
     @server = start_server
-      logger: this._logger
+      logger: @_logger
       getWatchesHandler: pigeon.getWatches
       watchGetHandler: pigeon.getWatch
       watchPostHandler: pigeon.postWatch
       watchDeleteHandler: pigeon.deleteWatch
 
-  componentDidUnmount: ->
-    @server.close()
+  _stopServer: ->
+    @server?.close()
 
   _logger: (str) ->
-    newBuffer = this.state.logBuffer
+    newBuffer = @state.logBuffer
     newBuffer.unshift str
-    this.setState logBuffer: newBuffer
+    @setState logBuffer: newBuffer
 
   render: ->
     <Grid>
       <Row className='show-grid'>
         <Col md={9}>
-          <ArtifactPanel logger={this._logger} />
+          <ArtifactPanel logger={@_logger} />
         </Col>
         <Col md={3}>
-          <ServerLog buffer={this.state.logBuffer} />
+          <ServerLog buffer={@state.logBuffer} />
         </Col>
       </Row>
     </Grid>

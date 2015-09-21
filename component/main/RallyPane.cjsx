@@ -23,12 +23,22 @@ RallyPane = React.createClass
     username: RallyStore.getUsername()
     password: RallyStore.getPassword()
 
-  _onRallyServerDataChange: (e) ->
-    data = {}
-    attr = e.target.getAttribute('data-attribute')
-    data[attr] = e.target.value
-    RallyStore.setData data
-    @_setState _.assign {}, data, connected: false, checkingConnection: true
+  _onServerChange: (e) ->
+    server = if !e.target.value.match /^http:\/\// then "http://#{e.target.value}" else e.target.value
+    RallyStore.setServer server
+    @_setState _.assign {}, {server}, connected: false, checkingConnection: true
+    @_checkConnection()
+
+  _onUsernameChange: (e) ->
+    username = e.target.value
+    RallyStore.setUsername username
+    @_setState _.assign {}, {username}, connected: false, checkingConnection: true
+    @_checkConnection()
+
+  _onPasswordChange: (e) ->
+    password = e.target.value
+    RallyStore.setPassword password
+    @_setState _.assign {}, {password}, connected: false, checkingConnection: true
     @_checkConnection()
 
   _checkConnection: ->
@@ -66,8 +76,8 @@ RallyPane = React.createClass
     for field in ['UserName', 'EmailAddress', 'SubscriptionPermission', 'LastPasswordUpdateDate']
       <tr><td>{field}</td><td>{@state.user[field]}</td></tr>
 
-  render: ->
-    user = if @state.connected
+  _renderConnectionStatus: ->
+    if @state.connected
       <div>
         <h3 style={{color: 'green'}} dangerouslySetInnerHTML={{__html: "&#10003; Connected!"}}></h3>
         <Table striped bordered condensed hover>
@@ -76,7 +86,7 @@ RallyPane = React.createClass
       </div>
     else if @state.checkingConnection
       <div>
-        <h3 style={{color: 'yellow'}} dangerouslySetInnerHTML={{__html: "Checking connection..."}}></h3>
+        <h3 style={{color: 'yellow', backgroundColor: 'black'}} dangerouslySetInnerHTML={{__html: "Checking connection..."}}></h3>
       </div>
     else
       <div>
@@ -85,11 +95,12 @@ RallyPane = React.createClass
       </div>
 
 
+  render: ->
     <form>
-      <Input type="text" label='Server' value={@state.server} data-attribute="server" onChange={this._onRallyServerDataChange} />
-      <Input type="text" label='Username' value={@state.username} data-attribute="username" onChange={this._onRallyServerDataChange} />
-      <Input type="text" label='Password' value={@state.password} data-attribute="password" onChange={this._onRallyServerDataChange} />
-      {user}
+      <Input type="text" label='Server' value={@state.server} data-attribute="server" onChange={this._onServerChange} />
+      <Input type="text" label='Username' value={@state.username} data-attribute="username" onChange={this._onUsernameChange} />
+      <Input type="text" label='Password' value={@state.password} data-attribute="password" onChange={this._onPasswordChange} />
+      {@_renderConnectionStatus()}
     </form>
 
 
