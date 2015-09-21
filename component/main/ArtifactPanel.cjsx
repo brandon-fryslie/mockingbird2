@@ -8,7 +8,7 @@ ArtifactStore = require './ArtifactStore'
 RallyStore = require './RallyStore'
 
 ArtifactPanel = React.createClass
-  displayName: 'ArtifactPanel',
+  displayName: 'ArtifactPanel'
 
   getInitialState: ->
     artifacts: []
@@ -49,6 +49,9 @@ ArtifactPanel = React.createClass
     type = if artifact._type is 'HierarchicalRequirement' then 'userstory' else artifact._type
     "#{RallyStore.getServer()}/#/#{@_getOidFromRef(artifact.Project._ref)}d/detail/#{type}/#{@_getOidFromRef(artifact._ref)}"
 
+  _realWatch: (e) ->
+    # send request to pigeon
+
   render: ->
     table = if @state.artifacts.length is 0
       <div>No artifacts loaded</div>
@@ -56,19 +59,24 @@ ArtifactPanel = React.createClass
       <div>{@state.error}</div>
     else
       rows = for artifact in @state.artifacts
-        <tr>
+        <tr key={artifact._refObjectUUID}>
           <td>
             <span>
-              <a onClick={@_onLinkClick} href={@_makeDetailLink(artifact)}>{artifact._refObjectName}</a>&nbsp;(<a onClick={@_onLinkClick} href={artifact._ref}>WSAPI</a>)
+              <a onClick={@_onLinkClick} href={@_makeDetailLink(artifact)}>{artifact.FormattedID}</a>:&nbsp;{artifact._refObjectName}&nbsp;(<a onClick={@_onLinkClick} href={artifact._ref}>WSAPI</a>)
             </span>
-            <span></span>
           </td>
           <td>
-            <Input type='checkbox' label='Watching?' checked={artifact.watching} onChange={@onWatchingCheckboxChange} data-id={artifact._refObjectUUID} />
+            <Input type='checkbox' label=" " checked={artifact.watching} onChange={@onWatchingCheckboxChange} data-id={artifact._refObjectUUID} />
+          </td>
+          <td>
+            <Button onClick={@_realWatch(artifact)}>Watch</Button>
           </td>
         </tr>
 
       <Table striped bordered condensed hover>
+        <thead>
+          <tr><th>&nbsp;</th><th>Mock Watch</th><th>Real Watch</th></tr>
+        </thead>
         <tbody>
           {rows}
         </tbody>

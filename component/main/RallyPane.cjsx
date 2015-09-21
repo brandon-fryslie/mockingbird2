@@ -73,8 +73,8 @@ RallyPane = React.createClass
         checkingConnection: false
 
   _renderUser: ->
-    for field in ['UserName', 'EmailAddress', 'SubscriptionPermission', 'LastPasswordUpdateDate']
-      <tr><td>{field}</td><td>{@state.user[field]}</td></tr>
+    for idx, field of ['UserName', 'EmailAddress', 'SubscriptionPermission', 'LastPasswordUpdateDate']
+      <tr key={idx}><td>{field}</td><td>{@state.user[field]}</td></tr>
 
   _renderConnectionStatus: ->
     if @state.connected

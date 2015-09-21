@@ -1,7 +1,7 @@
 _ = require 'lodash'
 React = require 'react'
 
-{Grid, Row, Col, Panel, TabbedArea, TabPane} = require 'react-bootstrap'
+{Grid, Row, Col, Panel, TabbedArea, TabPane, ButtonToolbar, Button, Input} = require 'react-bootstrap'
 ServerLog = require('./ServerLog')
 ArtifactPanel = require('./ArtifactPanel')
 
@@ -16,8 +16,13 @@ pigeon = new MockPigeon watchesStore
 MockPigeonPane = React.createClass
   displayName: 'MockPigeonPane'
 
+  _setState: (data) ->
+    @setState _.assign {}, @state, data
+
   getInitialState: ->
     logBuffer: []
+    port: 3200
+    running: false
 
   componentWillMount: ->
     @_startServer()
@@ -25,16 +30,25 @@ MockPigeonPane = React.createClass
   componentDidUnmount: ->
     @_stopServer()
 
+  _onPortChange: (e) ->
+    @_setState port: e.target.value
+
   _startServer: ->
-    @server = start_server
-      logger: @_logger
-      getWatchesHandler: pigeon.getWatches
-      watchGetHandler: pigeon.getWatch
-      watchPostHandler: pigeon.postWatch
-      watchDeleteHandler: pigeon.deleteWatch
+    unless @state.running
+      @server = start_server
+        port: @state.port
+        logger: @_logger
+        getWatchesHandler: pigeon.getWatches
+        watchGetHandler: pigeon.getWatch
+        watchPostHandler: pigeon.postWatch
+        watchDeleteHandler: pigeon.deleteWatch
+      @setState running: true
 
   _stopServer: ->
-    @server?.close()
+    if @state.running
+      @server?.close()
+      @setState running: false
+      @_logger 'Stopping server...'
 
   _logger: (str) ->
     newBuffer = @state.logBuffer
@@ -42,15 +56,13 @@ MockPigeonPane = React.createClass
     @setState logBuffer: newBuffer
 
   render: ->
-    <Grid>
-      <Row className='show-grid'>
-        <Col md={9}>
-          <ArtifactPanel logger={@_logger} />
-        </Col>
-        <Col md={3}>
-          <ServerLog buffer={@state.logBuffer} />
-        </Col>
-      </Row>
-    </Grid>
+    <Panel>
+      <ButtonToolbar>
+        <Button onClick={@_startServer}>Start Server</Button>
+        <Button onClick={@_stopServer}>Stop Server</Button>
+      </ButtonToolbar>
+      <Input type="text" label='Port' value={@state.port} onChange={this._onPortChange} />
+      <ServerLog buffer={@state.logBuffer} />
+    </Panel>
 
 module.exports = MockPigeonPane

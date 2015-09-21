@@ -15,8 +15,7 @@ Tools = React.createClass
   getInitialState: ->
     pokeAlmSliderValue: 1
 
-  _handlePokeAlmSliderChange: ->
-    debugger
+  _onPokeAlmSliderChange: ->
 
   render: ->
     <Panel>
@@ -26,6 +25,7 @@ Tools = React.createClass
          <input id="mySlider"
                   type="range"
                   value={@state.pokeAlmSliderValue}
+                  onChange={@_onPokeAlmSliderChange}
                   label="Pokes per second"
                   min=1
                   max=100

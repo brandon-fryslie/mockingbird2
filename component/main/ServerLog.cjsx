@@ -6,6 +6,6 @@ ServerLog = React.createClass
   displayName: 'ServerLog',
 
   render: ->
-    <div class="log">{<Panel>{item}</Panel> for item in this.props.buffer}</div>
+    <div className="log">{<Panel key={index}>{item}</Panel> for index, item of this.props.buffer}</div>
 
 module.exports = ServerLog

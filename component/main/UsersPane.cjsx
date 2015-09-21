@@ -7,8 +7,8 @@ React = require 'react'
 UsersStore = require './UsersStore'
 RallyStore = require './RallyStore'
 
-ArtifactPanel = React.createClass
-  displayName: 'ArtifactPanel',
+UsersPane = React.createClass
+  displayName: 'UsersPane'
 
   getInitialState: ->
     users: []
@@ -76,4 +76,4 @@ ArtifactPanel = React.createClass
       {table}
     </Panel>
 
-module.exports = ArtifactPanel
+module.exports = UsersPane

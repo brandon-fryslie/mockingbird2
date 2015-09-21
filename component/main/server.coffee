@@ -73,7 +73,7 @@ start_up_server = (opts) ->
   #   opts.logger "#{req.method} #{req.url}: fell through to default handler"
   #   res.status(200).send('default handler')
 
-  port = 3200
+  port = opts.port ? 3200
 
   server = app.listen "#{port}"
 
