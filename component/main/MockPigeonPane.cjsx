@@ -56,13 +56,13 @@ MockPigeonPane = React.createClass
     @setState logBuffer: newBuffer
 
   render: ->
-    <Panel>
+    <div>
       <ButtonToolbar>
         <Button onClick={@_startServer}>Start Server</Button>
         <Button onClick={@_stopServer}>Stop Server</Button>
       </ButtonToolbar>
       <Input type="text" label='Port' value={@state.port} onChange={this._onPortChange} />
       <ServerLog buffer={@state.logBuffer} />
-    </Panel>
+    </div>
 
 module.exports = MockPigeonPane

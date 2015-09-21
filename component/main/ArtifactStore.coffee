@@ -10,7 +10,7 @@ class ArtifactStore extends AbstractPagedStore
 
   type: 'artifact'
 
-  fetch: ['FormattedId', 'Project']
+  fetch: ['FormattedId', 'Notes', 'Project']
 
   constructor: ->
     Alm.addListener 'update', => @load()

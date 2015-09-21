@@ -41,7 +41,8 @@ class MockPigeon
     res.status(200).send('GETTING A WATCH FROM PIGEON')
 
   getWatches: (req, res) ->
-    res.status(200).json(ArtifactStore.getWatches())
+    debugger
+    res.status(200).json(artifactToWatch(artifact) for artifact in ArtifactStore.getArtifacts())
 
   getWatch: (req, res) ->
     artifact = ArtifactStore.getById req.params.artifact_uuid

@@ -6,6 +6,7 @@ React = require 'react'
 
 ArtifactStore = require './ArtifactStore'
 RallyStore = require './RallyStore'
+Alm = require './AlmApi'
 
 ArtifactPanel = React.createClass
   displayName: 'ArtifactPanel'
@@ -52,6 +53,16 @@ ArtifactPanel = React.createClass
   _realWatch: (e) ->
     # send request to pigeon
 
+  _touchArtifact: (record) ->
+    date = new Date()
+    Alm.api.update(
+      ref: record._ref
+      data:
+        Notes: "Updated #{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()} #{date.getMonth()+1}/#{date.getDate()}/#{date.getFullYear()}"
+    ).then (result) =>
+      @props.mainLogger "Updated artifact! #{@_makeDetailLink(artifact)}"
+      console.log 'updated artifact!', result
+
   render: ->
     table = if @state.artifacts.length is 0
       <div>No artifacts loaded</div>
@@ -70,6 +81,9 @@ ArtifactPanel = React.createClass
           </td>
           <td>
             <Button onClick={@_realWatch(artifact)}>Watch</Button>
+          </td>
+          <td>
+            <Button onClick={=> @_touchArtifact(artifact)}>Touch</Button>
           </td>
         </tr>
 

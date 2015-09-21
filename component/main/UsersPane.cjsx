@@ -7,6 +7,8 @@ React = require 'react'
 UsersStore = require './UsersStore'
 RallyStore = require './RallyStore'
 
+Alm = require './AlmApi'
+
 UsersPane = React.createClass
   displayName: 'UsersPane'
 
@@ -39,8 +41,14 @@ UsersPane = React.createClass
 
   _getOidFromRef: (ref) -> ref.replace /.*\/(\d)/, '$1'
 
-  _touchUser: (uuid) ->
-    console.log 'touching', record
+  _touchUser: (record) ->
+    date = new Date()
+
+    Alm.api.update(
+      ref: record._ref
+      data:
+        MiddleName: "Updated #{date.getHours()}:#{date.getMinutes()}:#{date.getSeconds()} #{date.getMonth()+1}/#{date.getDate()}/#{date.getFullYear()}"
+    )
 
   render: ->
     table = if @state.users.length is 0
@@ -49,7 +57,7 @@ UsersPane = React.createClass
       <div>{@state.error}</div>
     else
       rows = for record in @state.users
-        <tr data-id={record._refObjectUUID}>
+        <tr key={record._refObjectUUID}>
           <td>
             <span>
               <span>{record._refObjectName}</span>&nbsp;(<a onClick={@_onLinkClick} href={record._ref}>WSAPI</a>)

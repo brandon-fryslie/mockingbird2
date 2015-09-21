@@ -1,11 +1,15 @@
 React = require( 'react' )
 
-{Panel} = require 'react-bootstrap'
+{Panel, ListGroup, ListGroupItem} = require 'react-bootstrap'
 
 ServerLog = React.createClass
   displayName: 'ServerLog',
 
   render: ->
-    <div className="log">{<Panel key={index}>{item}</Panel> for index, item of this.props.buffer}</div>
+    <Panel header="Log">
+      <ListGroup header="Log">
+        {<ListGroupItem key={idx}>{item}</ListGroupItem> for idx, item of @props.buffer}
+      </ListGroup>
+    </Panel>
 
 module.exports = ServerLog
